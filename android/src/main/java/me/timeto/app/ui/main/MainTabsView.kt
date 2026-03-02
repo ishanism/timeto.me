@@ -39,6 +39,8 @@ import me.timeto.app.ui.onePx
 import me.timeto.app.ui.rememberVm
 import me.timeto.app.ui.squircleShape
 import me.timeto.app.ui.timerFont
+import me.timeto.app.ui.apps.AppDrawerFs
+import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.shared.vm.main.MainTabsVm
 
 val MainTabsView__height = 56.dp
@@ -51,6 +53,8 @@ fun MainTabsView(
     tab: MainTabEnum,
     onTabChanged: (MainTabEnum) -> Unit,
 ) {
+
+    val navigationFs = LocalNavigationFs.current
 
     val (_, state) = rememberVm {
         MainTabsVm()
@@ -174,6 +178,17 @@ fun MainTabsView(
                     )
                 }
             }
+
+            TabButton(
+                icon = R.drawable.sf_line_3_horizontal_medium_light,
+                contentDescription = "Apps",
+                isSelected = false,
+                onTouch = {
+                    navigationFs.push {
+                        AppDrawerFs()
+                    }
+                },
+            )
 
             TabButton(
                 icon = R.drawable.sf_ellipsis_circle_medium_thin,

@@ -106,15 +106,18 @@ private fun getApps(): List<ShortcutApp> {
     val packagesInfo: List<PackageInfo> =
         packageManager.getInstalledPackages(0)
     return packagesInfo
-        // Ignore system apps
-        // .filter { (it.applicationInfo.flags and ApplicationInfo.FLAG_SYSTEM) == 0 }
-        .map { packageInfo ->
-            val applicationInfo: ApplicationInfo = packageInfo.applicationInfo!!
-            ShortcutApp(
-                name = applicationInfo.loadLabel(packageManager).toString(),
-                androidPackage = applicationInfo.packageName,
-                icon = applicationInfo.loadIcon(packageManager),
-            )
+        .mapNotNull { packageInfo ->
+            val launchIntent = packageManager.getLaunchIntentForPackage(packageInfo.packageName)
+            if (launchIntent == null)
+                null
+            else {
+                val applicationInfo: ApplicationInfo = packageInfo.applicationInfo!!
+                ShortcutApp(
+                    name = applicationInfo.loadLabel(packageManager).toString(),
+                    androidPackage = applicationInfo.packageName,
+                    icon = applicationInfo.loadIcon(packageManager),
+                )
+            }
         }
         .sortedBy { shortcutApp ->
             shortcutApp.name.lowercase()
