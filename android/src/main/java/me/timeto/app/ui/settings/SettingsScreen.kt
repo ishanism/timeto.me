@@ -200,6 +200,24 @@ fun SettingsScreen(
                         }
                     },
                 )
+
+                FormPaddingSectionHeader()
+
+                FormHeader("LAUNCHER")
+
+                FormButton(
+                    title = "Set as default launcher",
+                    isFirst = true,
+                    isLast = true,
+                    withArrow = true,
+                    onClick = {
+                        try {
+                            context.startActivity(Intent(Settings.ACTION_HOME_SETTINGS))
+                        } catch (e: Exception) {
+                            navigationFs.alert("Unable to open home settings")
+                        }
+                    },
+                )
             }
 
             //
