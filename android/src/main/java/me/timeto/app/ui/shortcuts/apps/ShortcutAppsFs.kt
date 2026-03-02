@@ -107,10 +107,7 @@ private fun getApps(): List<ShortcutApp> {
         packageManager.getInstalledPackages(0)
     return packagesInfo
         .mapNotNull { packageInfo ->
-            val launchIntent = packageManager.getLaunchIntentForPackage(packageInfo.packageName)
-            if (launchIntent == null)
-                null
-            else {
+            packageManager.getLaunchIntentForPackage(packageInfo.packageName)?.let {
                 val applicationInfo: ApplicationInfo = packageInfo.applicationInfo!!
                 ShortcutApp(
                     name = applicationInfo.loadLabel(packageManager).toString(),

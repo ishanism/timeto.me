@@ -53,9 +53,7 @@ fun MainTabsView(
     tab: MainTabEnum,
     onTabChanged: (MainTabEnum) -> Unit,
 ) {
-
     val navigationFs = LocalNavigationFs.current
-
     val (_, state) = rememberVm {
         MainTabsVm()
     }

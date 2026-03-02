@@ -16,7 +16,8 @@ fun AppDrawerFs() {
         onAppSelected = { shortcutApp ->
             val intent = context.packageManager.getLaunchIntentForPackage(shortcutApp.androidPackage)
             if (intent == null) {
-                navigationFs.alert("App package not found")
+                // Defensive fallback: ShortcutAppsFs filters launchable apps, but keep user feedback just in case.
+                navigationFs.alert("Unable to launch app")
             } else {
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 context.startActivity(intent)
